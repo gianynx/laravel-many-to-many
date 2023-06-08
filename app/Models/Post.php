@@ -15,4 +15,9 @@ class Post extends Model
     {
         return $this->belongsTo(Technology::class);
     }
+
+    public function collaborators()
+    {
+        return $this->belongsToMany(Collaborator::class);
+    }
 }

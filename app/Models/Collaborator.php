@@ -9,4 +9,9 @@ class Collaborator extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'surname', 'image', 'email', 'username'];
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
 }

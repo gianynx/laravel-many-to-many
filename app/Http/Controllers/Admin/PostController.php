@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Collaborator;
 use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $technologies = Technology::all();
-        return view('admin.posts.create', compact('technologies'));
+        $collaborators = Collaborator::all();
+        return view('admin.posts.create', compact('technologies', 'collaborators'));
     }
 
     /**
@@ -45,9 +47,16 @@ class PostController extends Controller
         $formData = $request->validated();
         $slug = Str::slug($request->title, '-');
         $formData['slug'] = $slug;
-        $imgPath = Storage::put('uploads', $request->image);
-        $formData['image'] = asset('storage/' . $imgPath);
+        if ($request->hasFile('image'))
+        {
+            $image_path = Storage::put('uploads', $request->image);
+            $formData['image'] = asset('storage/' . $image_path);
+        }
         $post = Post::create($formData);
+        if ($request->hasFile('collaborators'))
+        {
+            $post->collaborators()->attach($request->collaborators);
+        }
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -71,7 +80,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $technologies = Technology::all();
-        return view('admin.posts.edit', compact('post', 'technologies'));
+        $collaborators = Collaborator::all();
+        return view('admin.posts.edit', compact('post', 'technologies', 'collaborators'));
     }
 
     /**
@@ -86,11 +96,16 @@ class PostController extends Controller
         $formData = $request->validated();
         $slug = Str::slug($request->title, '-');
         $formData['slug'] = $slug;
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image'))
+        {
             $image_path = Storage::put('uploads', $request->image);
             $formData['image'] = asset('storage/' . $image_path);
         }
         $post->update($formData);
+        if ($request->hasFile('collaborators'))
+        {
+            $post->collaborators()->sync($request->collaborators);
+        }
         return redirect()->route('admin.posts.show', $post->slug)->with('message', 'The post has been updated successfully!');
     }
 

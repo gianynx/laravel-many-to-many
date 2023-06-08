@@ -46,6 +46,24 @@
                     </textarea>
                 </div>
             </div>
+            <div class="mb-3">
+                <div class="form-label fw-bold">Collaborators</div>
+                @foreach ($collaborators as $collaborator)
+                    <div>
+                        <input name="collaborators[]" class="form-check-input" type="checkbox"
+                            value="{{ $collaborator->id }}" id="collaborators"
+                            {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+                        <label class="form-check-label px-2" for="collaborators">
+                            {{ $collaborator->name }}
+                            {{ $collaborator->surname }}
+                        </label>
+                    </div>
+                @endforeach
+                <div class="form-text">Insert the collaborators!</div>
+                @error('collaborators')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="pt-4">
                 <button type="submit" class="btn btn-outline-dark text-uppercase">Submit</button>
                 <button type="reset" class="btn btn-outline-dark text-uppercase">Reset</button>

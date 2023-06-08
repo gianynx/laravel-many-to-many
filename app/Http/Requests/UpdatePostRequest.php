@@ -45,6 +45,10 @@ class UpdatePostRequest extends FormRequest
             'technology_id' => [
                 'nullable',
                 'exists:posts,id'
+            ],
+            'collaborators' => [
+                'nullable',
+                'exists:collaborators,id'
             ]
         ];
     }

@@ -29,6 +29,19 @@
                 @endif
             </div>
         </div>
+        <div class="pt-2">
+            <h2 class="text-secondary">Collaborators:</h2>
+            <div class="pb-5">
+                @if ($post->collaborators)
+                    @foreach ($post->collaborators as $collaborator)
+                        <div>
+                            {{ $collaborator->name }}
+                            {{ $collaborator->surname }}
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
         <div class="pb-5">
             <a class="btn btn-outline-dark text-uppercase" href="{{ route('admin.posts.edit', $post->slug) }}">
                 edit this project
