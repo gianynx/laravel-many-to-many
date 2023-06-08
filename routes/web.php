@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\TechnologyController;
+use App\Http\Controllers\Admin\CollaboratorController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/posts', PostController::class)->parameters(['posts' => 'post:slug']);
     Route::resource('/technologies', TechnologyController::class)->parameters(['technologies' => 'technology:id']);
+    Route::resource('/collaborators', CollaboratorController::class)->parameters(['technologies' => 'technology:id']);
 });
 
 // Route::middleware('auth')->group(function () {

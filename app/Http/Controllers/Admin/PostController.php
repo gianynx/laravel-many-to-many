@@ -86,6 +86,10 @@ class PostController extends Controller
         $formData = $request->validated();
         $slug = Str::slug($request->title, '-');
         $formData['slug'] = $slug;
+        if ($request->hasFile('image')) {
+            $image_path = Storage::put('uploads', $request->image);
+            $formData['image'] = asset('storage/' . $image_path);
+        }
         $post->update($formData);
         return redirect()->route('admin.posts.show', $post->slug)->with('message', 'The post has been updated successfully!');
     }
