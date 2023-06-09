@@ -52,7 +52,7 @@
                     <div>
                         <input name="collaborators[]" class="form-check-input" type="checkbox"
                             value="{{ $collaborator->id }}" id="collaborators"
-                            {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+                            {{ $post->collaborators->contains($collaborator) ? 'checked' : '' }}>
                         <label class="form-check-label px-2" for="collaborators">
                             {{ $collaborator->name }}
                             {{ $collaborator->surname }}
