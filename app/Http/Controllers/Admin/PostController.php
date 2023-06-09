@@ -53,7 +53,7 @@ class PostController extends Controller
             $formData['image'] = asset('storage/' . $image_path);
         }
         $post = Post::create($formData);
-        if ($request->hasFile('collaborators'))
+        if ($request->has('collaborators'))
         {
             $post->collaborators()->attach($request->collaborators);
         }
