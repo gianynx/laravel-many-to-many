@@ -25,7 +25,11 @@
             <h2 class="text-secondary">Technology:</h2>
             <div class="pb-5">
                 @if ($post->technology_id)
-                    <div class="fs-2">{{ $post->technology->name }}</div>
+                    <div class="fs-2">
+                        <a class="text-decoration-none" href="{{ route('admin.technologies.index') }}">
+                            {{ $post->technology->name }}
+                        </a>
+                    </div>
                 @endif
             </div>
         </div>
@@ -35,11 +39,17 @@
                 @if ($post->collaborators)
                     @foreach ($post->collaborators as $collaborator)
                         <div>
-                            {{ $collaborator->name }}
-                            {{ $collaborator->surname }}
+                            <a class="text-decoration-none" href="{{ route('admin.collaborators.index') }}">
+                                {{ $collaborator->name }}
+                                {{ $collaborator->surname }}
+                            </a>
                         </div>
                     @endforeach
                 @endif
+                <div class="fs-5 pt-2">
+                    <span>Do you want to add some collaborators?</span>
+                    <i class="fa-solid fa-turn-down px-2"></i>
+                </div>
             </div>
         </div>
         <div class="pb-5">
