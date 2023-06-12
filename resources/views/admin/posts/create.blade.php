@@ -9,10 +9,15 @@
         <h1 class="fw-bold pb-4">Create a new project!</h1>
         <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            {{-- image preview --}}
+            <div class="media me-4 mb-4">
+                <img id="uploadPreview" width="100" src="https://via.placeholder.com/300x200">
+            </div>
+
             <div class="mb-3">
                 <label for="image" class="form-label fw-bold">Image</label>
-                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image"
-                    aria-describedby="imageHelp" required>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image"
+                    id="image" aria-describedby="imageHelp" required>
                 <div id="imageHelp" class="form-text">Insert a image!</div>
                 @error('image')
                     <div class="invalid-feedback">{{ $message }}</div>
